@@ -1,9 +1,10 @@
-REPORTS_CONFIG_PATH: getenv[`REPORTS_HOME],"/reportHandler/report_config/";
+REPORTS_CONFIG_PATH: getenv[`cd];
 
 / params @dirpath: directory path for json report report_config
-/ fetches all report in the config ! important ! ONLY WINDOWS ! important !
 get_files:{[dirpath]
-    command: "dir ",ssr[dirpath;"/";"\\"]," /b /o";
+    command:$[.z.o in`w32`w64;
+    "dir ",ssr[dirpath;"/";"\\"]," /b /o";
+    "ls"];
     result: system command;
     result
  };
