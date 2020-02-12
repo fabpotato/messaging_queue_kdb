@@ -154,8 +154,6 @@ runandrescheduleReference:{
     start:.z.p;
     @[$[logcall;0;value];x`funcparam;{update active:0b from `.timer.timer where id=x`id; -2"timer ID ",(string x`id)," failed with error ",y,".  The function will not be rescheduled"}[x]];
     op:@[read0; hsym `$(x[`location],"result.txt");"0 "];
-    show op;
-    show op~"0 ";
     if[not op~"0 ";{update active:0b from `.timer.timer where id=x`id; -2"timer ID ",(string x`id),". The function will not be rescheduled"}[x]];
     /- work out the next run time
     n:x[`period]+(x[`nextrun];start;.z.p) x`nextschedule;
@@ -197,18 +195,6 @@ popQueue:{
     update status:`RUNNING from `.timer.timer where description like data`reportname;
     :data]]
     }
-
-/*******************
-/if debug is set to true then print out which timer is running and the funcparams. The particular columns to be stringed are pulled out by string x`id.
-/Protected execution is implemented in order to check whether the timer can run without error, if not then the timer id and the error in the log is outputted.
-/If logcall is true then 0 will return as the first parameter otherwise value will return. The second parameter is extracting the funcparams, this only performs if the first parameter on x is performed. 
-/Within n, to each period timespan row it adds either the nextrun timestamp to it, the start timestamp or the current timestamp depending on what value nextschedule is inputted.
-
-/An if else is performed where if n is within the first timer start and the last timer start, then the next statement is executed where the lastrun is updated as 
-/the start time of the timer, and the nextrun column is updated to the timestamp n.
-/When n is not within periodstart and end, assuming debug mode is true then a warning output is shown explaining that the next run time is outside the limits.
-/The timer will not be performed, lastrun will be the start timestamp and active is set to false for this timer ID.
-/*******************
 
 
 loaded:1b
