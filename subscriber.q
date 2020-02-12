@@ -26,7 +26,7 @@ execute_report:{[command; externalargs;location]
     command: command;
     / TODO:
     / Global dictionary fits here : 
-    globalconfig: @[{globalconfigloc: getenv[`REPORTS_HOME], "/reportHandler/global_config.json";
+    globalconfig: @[{globalconfigloc: "global_config.json";
     config: raze read0 hsym `$globalconfigloc;
     .j.k config};`;{show "error reading global config ", x;()!()}];
     externalargs: .j.j globalconfig, @[{[x] .j.k x};externalargs;{[externalargs; x] if[not externalargs~"";show "unable to jsonify : ",externalargs]; ()!()}[externalargs;]];
